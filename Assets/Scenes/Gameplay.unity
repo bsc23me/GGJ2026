@@ -799,7 +799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fad726d7d9e9948b09110f8f6b8072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  totalGuestsAndIntruders: 3
+  totalGuestsAndIntruders: 5
   guestRenderer: {fileID: 1291010474}
   maskRenderer: {fileID: 587601138}
   masks:
@@ -845,6 +845,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4113f3fcfd10d2f42ad7a14cf1f2a53f, type: 2}
   - {fileID: 11400000, guid: 17ec4794df5d2af468da993af1e3f22c, type: 2}
   - {fileID: 11400000, guid: 78a5d34c0c8d88c49948639438525e1b, type: 2}
+  - {fileID: 11400000, guid: 7b95d505dbc4d904891661e9a3d8834d, type: 2}
   profileList: []
   lineItemPrefab: {fileID: 1435546951087551809, guid: 47cabb4a33f04f84288726d83ad063fe, type: 3}
   lineItemParent: {fileID: 1412116093}
@@ -1228,7 +1229,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 130705713}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9998189
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2172,7 +2173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000010109387}
+  m_AnchoredPosition: {x: 0, y: 0.000055286717}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1412116094

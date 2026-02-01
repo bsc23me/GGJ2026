@@ -9,6 +9,7 @@ public class PopulateGuestList : MonoBehaviour
 
     public GuestProfile[] profiles;
     public Dictionary<int,GuestProfile> CompleteProfileList { get; private set; }
+    [HideInInspector] public List<GuestProfile> tempProfileList;
     [HideInInspector] public List<GuestProfile> profileList;
 
     [SerializeField] private GameObject lineItemPrefab;
@@ -19,6 +20,7 @@ public class PopulateGuestList : MonoBehaviour
     void Start()
     {
         CompleteProfileList = new Dictionary<int, GuestProfile>();
+        tempProfileList = new List<GuestProfile>();
         profileList = new List<GuestProfile>();
 
        
@@ -34,14 +36,15 @@ public class PopulateGuestList : MonoBehaviour
         {
             CompleteProfileList.Add(profiles[i].id,profiles[i]);
             if (!profiles[i].isIntruder)
-                profileList.Add(profiles[i]);
+                tempProfileList.Add(profiles[i]);
         }
+        profileList.AddRange(tempProfileList);
         for (int i = 0; i < numberOfGuests; i++)
         {
             GameObject lineItem = Instantiate(lineItemPrefab, lineItemParent);
-            int j = Random.Range(0, profileList.Count);
-            lineItem.GetComponent<GuestInfo>().profile = profileList[j];
-            profileList.RemoveAt(j);
+            int j = Random.Range(0, tempProfileList.Count);
+            lineItem.GetComponent<GuestInfo>().profile = tempProfileList[j];
+            tempProfileList.RemoveAt(j);
         }
     }
 

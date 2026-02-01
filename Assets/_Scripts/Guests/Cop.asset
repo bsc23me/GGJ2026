@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc19a2fcb1457d46a2bcf5982747c68, type: 3}
+  m_Name: Cop
+  m_EditorClassIdentifier: Assembly-CSharp::GuestProfile
+  id: 5
+  isIntruder: 1
+  guestImage: {fileID: 5484382190762496645, guid: 2137430f3b1845d409044d6fa27a0714, type: 3}
+  PFP: {fileID: 0}
+  guestName: 
+  descriptors: []
+  statements:
+  - Got any beer? I sure hope there are no underage drinkers here tonight, right?
+  - I'm sorry, can you say that again? Just want to make sure I heard you correctly,
+    on this date, at this address
+  arriveStatement: 
+  leaveStatement: 
+  bouncerThoughts: 

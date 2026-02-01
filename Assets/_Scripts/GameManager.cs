@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     public void SelectGuest(int id)
     {
         Debug.Log("Selected " + populateGuestList.CompleteProfileList[id].guestName);
-        if (populateGuestList.CompleteProfileList[id].isIntruder)
+        if (populateGuestList.CompleteProfileList[currentGuest].isIntruder)
         {
             AllowGuestIn(true);
         }
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         CloseDoor();
         if (populateGuestList.profileList.Contains(populateGuestList.CompleteProfileList[currentGuest]))
         {
-            strikes++;
+            AddStrike();
         }
 
         Invoke("SendNextGuest", 3f);
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
 
     void AllowGuestIn(bool fail)
     {
-        strikes += fail ? 1 : 0;
+        if(fail) AddStrike();
 
         maskRenderer.color = new Color(1, 1, 1, 0);
         guestRenderer.color = new Color(1, 1, 1, 1);
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         guestAnnoyances++;
         if (guestAnnoyances >= maxGuestAnnoyances)
         {
-            strikes++;
+            AddStrike();
             if (strikes < maxStrikes)
                 FailGuest();
             else // LOSE
@@ -170,6 +170,16 @@ public class GameManager : MonoBehaviour
         else
         {
             GetNextStatement();
+        }
+    }
+
+    void AddStrike()
+    {
+        strikes++;
+       // Debug.Log(strikes);
+        if(strikes >= maxStrikes)
+        {
+            SceneManager.LoadScene(3);
         }
     }
 
