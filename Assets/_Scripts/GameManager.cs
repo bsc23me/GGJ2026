@@ -39,22 +39,31 @@ public class GameManager : MonoBehaviour
 
     private List<string> statements;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip doorOpen;
+    [SerializeField] private AudioClip doorClose;
+    [SerializeField] private AudioClip doorSlam;
+    [SerializeField] private AudioClip doorBell;
+    [SerializeField] private AudioClip[] footsteps;
+
+
     public void Awake()
     {
         if (instance == null)
             instance = this;
     }
-    // t
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         populateGuestList = GetComponent<PopulateGuestList>();
+        audioSource = GetComponent<AudioSource>();
+        LoadAudio();
         roundProfiles = new List<GuestProfile>();
         statements = new List<string>();
         GenerateRoundProfiles(totalGuestsAndIntruders);
 
-        CloseDoor();
-        SendNextGuest();
+        doorClosed.SetActive(true);
+        Invoke("SendNextGuest", 3f);
 
         doorButton.onClick.AddListener(delegate { OpenDoor(); });
         doorSlamButton.onClick.AddListener(delegate { SlamDoor(); });
@@ -100,6 +109,7 @@ public class GameManager : MonoBehaviour
     {
         guestAnnoyances = 0;
         doorButton.interactable = true;
+        audioSource.PlayOneShot(doorBell);
         int j = Random.Range(0, roundProfiles.Count);
         GuestProfile guest = roundProfiles[j];
         roundProfiles.RemoveAt(j);
@@ -119,15 +129,22 @@ public class GameManager : MonoBehaviour
     {
         doorClosed.SetActive(false);
         doorButton.interactable = false;
+        audioSource.PlayOneShot(doorOpen);
         GetNextStatement();
     }
 
-    void CloseDoor() => doorClosed.SetActive(true);
+    void CloseDoor()
+    {
+        doorClosed.SetActive(true);
+        audioSource.PlayOneShot(doorClose);
+    }
 
     void SlamDoor()
     {
+
+        audioSource.PlayOneShot(doorSlam);
         guestStatements.text = populateGuestList.CompleteProfileList[currentGuest].leaveStatement;
-        CloseDoor();
+        doorClosed.SetActive(true);
         if (populateGuestList.profileList.Contains(populateGuestList.CompleteProfileList[currentGuest]))
         {
             AddStrike();
@@ -200,6 +217,17 @@ public class GameManager : MonoBehaviour
         else
         {
             guestStatements.text = "...";
+        }
+    }
+
+    void LoadAudio()
+    {
+        doorOpen.LoadAudioData();
+        doorSlam.LoadAudioData();
+        doorBell.LoadAudioData();
+        foreach(AudioClip clip in footsteps)
+        {
+            clip.LoadAudioData();
         }
     }
 }
