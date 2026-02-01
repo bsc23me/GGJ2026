@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             else // WIN
             {
                 audioSource.PlayOneShot(winAudio);
-                SceneManager.LoadScene(4);
+                SceneManager.LoadScene(3);
             }
         }
         else
