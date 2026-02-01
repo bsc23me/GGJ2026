@@ -33,9 +33,9 @@ public class PopulateGuestList : MonoBehaviour
         for(int i = 0; i < profiles.Length; i++)
         {
             CompleteProfileList.Add(profiles[i].id,profiles[i]);
+            if (!profiles[i].isIntruder)
+                profileList.Add(profiles[i]);
         }
-
-        profileList.AddRange(profiles);
         for (int i = 0; i < numberOfGuests; i++)
         {
             GameObject lineItem = Instantiate(lineItemPrefab, lineItemParent);

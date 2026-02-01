@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc19a2fcb1457d46a2bcf5982747c68, type: 3}
+  m_Name: Racoons
+  m_EditorClassIdentifier: Assembly-CSharp::GuestProfile
+  id: 4
+  isIntruder: 1
+  guestImage: {fileID: -6367882625030703389, guid: 921eb6f794483c54fa94af100de3c161, type: 3}
+  PFP: {fileID: 0}
+  guestName: Racoons
+  descriptors: []
+  statements:
+  - Please.
+  - I can play music if you want?
+  - Do you know what I love? Sportsball!
+  arriveStatement: I am a real human man and you should let me in.
+  leaveStatement: 
+  bouncerThoughts: 

@@ -5,6 +5,7 @@ public class GuestProfile : ScriptableObject
 {
 
     public int id;
+    public bool isIntruder;
     public Sprite guestImage;
     public Sprite PFP;
     public string guestName;

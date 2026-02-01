@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject doorClosed;
     [SerializeField] private Button doorButton;
     [SerializeField] private Button doorSlamButton;
+    [SerializeField] private Button inquireButton;
 
     private int guestAnnoyances;
     [SerializeField] private int maxGuestAnnoyances;
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
     }
     // t
@@ -57,38 +58,30 @@ public class GameManager : MonoBehaviour
 
         doorButton.onClick.AddListener(delegate { OpenDoor(); });
         doorSlamButton.onClick.AddListener(delegate { SlamDoor(); });
+        inquireButton.onClick.AddListener(delegate { Inquire(); });
     }
 
     public void SelectGuest(int id)
     {
         Debug.Log("Selected " + populateGuestList.CompleteProfileList[id].guestName);
-        if (currentGuest == id)
+        if (populateGuestList.CompleteProfileList[id].isIntruder)
         {
-            // TODO: punish for intruder
+            AllowGuestIn(true);
+        }
+        else if (currentGuest == id)
+        {
             guestsEntered++;
             if (guestsEntered < populateGuestList.numberOfGuests)
             {
                 // add door and bell stuff
-                SucessGuest();
+                AllowGuestIn(false);
             }
             else // WIN
                 SceneManager.LoadScene(2);
         }
         else
         {
-            guestAnnoyances++;
-            if (guestAnnoyances >= maxGuestAnnoyances)
-            {
-                strikes++;
-                if (strikes < maxStrikes)
-                    FailGuest();
-                else // LOSE
-                    SceneManager.LoadScene(3);
-            }
-            else
-            {
-                GetNextStatement();
-            }
+            Inquire();
         }
     }
 
@@ -139,10 +132,14 @@ public class GameManager : MonoBehaviour
         {
             strikes++;
         }
+
+        Invoke("SendNextGuest", 3f);
     }
 
-    void SucessGuest()
+    void AllowGuestIn(bool fail)
     {
+        strikes += fail ? 1 : 0;
+
         maskRenderer.color = new Color(1, 1, 1, 0);
         guestRenderer.color = new Color(1, 1, 1, 1);
 
@@ -155,7 +152,25 @@ public class GameManager : MonoBehaviour
         maskRenderer.sprite = maskleave;
         guestStatements.text = populateGuestList.CompleteProfileList[currentGuest].leaveStatement;
 
+        Invoke("CloseDoor", 2f);
         Invoke("SendNextGuest", 5f);
+    }
+
+    void Inquire()
+    {
+        guestAnnoyances++;
+        if (guestAnnoyances >= maxGuestAnnoyances)
+        {
+            strikes++;
+            if (strikes < maxStrikes)
+                FailGuest();
+            else // LOSE
+                SceneManager.LoadScene(3);
+        }
+        else
+        {
+            GetNextStatement();
+        }
     }
 
     void AddGuestStatements(GuestProfile profile)
