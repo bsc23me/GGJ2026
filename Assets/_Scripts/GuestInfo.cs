@@ -12,10 +12,11 @@ public class GuestInfo : MonoBehaviour
     void Start()
     {
         transform.GetChild(4).gameObject.SetActive(false);
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = profile.guestName;
-        transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = GetDescriptors();
-        transform.GetChild(2).GetComponent<Image>().sprite = profile.PFP;
-        transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { });
+        transform.GetChild(0).GetComponent<Image>().sprite = profile.PFP;
+        transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = profile.guestName;
+        transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = GetDescriptors();
+        transform.GetChild(3).GetComponent<Button>().onClick.AddListener(
+            delegate { GameManager.Instance.SelectGuest(profile.id); });
 
     }
 
