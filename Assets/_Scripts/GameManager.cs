@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     private int guestsEntered;
 
     [SerializeField] private TextMeshProUGUI guestStatements;
+    [SerializeField] private GameObject guestStatementBG;
 
     private List<string> statements;
 
@@ -45,12 +46,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip doorSlam;
     [SerializeField] private AudioClip doorBell;
     [SerializeField] private AudioClip[] footsteps;
+    [SerializeField] private AudioClip winAudio;
+    [SerializeField] private AudioClip loseAudio;
 
 
     public void Awake()
     {
         if (instance == null)
             instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -60,11 +64,13 @@ public class GameManager : MonoBehaviour
         LoadAudio();
         roundProfiles = new List<GuestProfile>();
         statements = new List<string>();
+        guestStatementBG.SetActive(false);
         GenerateRoundProfiles(totalGuestsAndIntruders);
 
         doorClosed.SetActive(true);
         Invoke("SendNextGuest", 3f);
 
+        doorButton.interactable = false;
         doorButton.onClick.AddListener(delegate { OpenDoor(); });
         doorSlamButton.onClick.AddListener(delegate { SlamDoor(); });
         inquireButton.onClick.AddListener(delegate { Inquire(); });
@@ -86,7 +92,10 @@ public class GameManager : MonoBehaviour
                 AllowGuestIn(false);
             }
             else // WIN
-                SceneManager.LoadScene(2);
+            {
+                audioSource.PlayOneShot(winAudio);
+                SceneManager.LoadScene(4);
+            }
         }
         else
         {
@@ -110,6 +119,7 @@ public class GameManager : MonoBehaviour
         guestAnnoyances = 0;
         doorButton.interactable = true;
         audioSource.PlayOneShot(doorBell);
+        guestStatementBG.SetActive(false);
         int j = Random.Range(0, roundProfiles.Count);
         GuestProfile guest = roundProfiles[j];
         roundProfiles.RemoveAt(j);
@@ -136,6 +146,8 @@ public class GameManager : MonoBehaviour
     void CloseDoor()
     {
         doorClosed.SetActive(true);
+        guestStatementBG.SetActive(false);
+        guestRenderer.color = new Color(1,1,1,0);
         audioSource.PlayOneShot(doorClose);
     }
 
@@ -145,6 +157,8 @@ public class GameManager : MonoBehaviour
         audioSource.PlayOneShot(doorSlam);
         guestStatements.text = populateGuestList.CompleteProfileList[currentGuest].leaveStatement;
         doorClosed.SetActive(true);
+        guestRenderer.color = new Color(1, 1, 1, 1);
+        maskRenderer.color = new Color(1, 1, 1, 0);
         if (populateGuestList.profileList.Contains(populateGuestList.CompleteProfileList[currentGuest]))
         {
             AddStrike();
@@ -182,7 +196,7 @@ public class GameManager : MonoBehaviour
             if (strikes < maxStrikes)
                 FailGuest();
             else // LOSE
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(4);
         }
         else
         {
@@ -196,7 +210,7 @@ public class GameManager : MonoBehaviour
        // Debug.Log(strikes);
         if(strikes >= maxStrikes)
         {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
     }
 
@@ -208,6 +222,7 @@ public class GameManager : MonoBehaviour
 
     void GetNextStatement()
     {
+        guestStatementBG.SetActive(true);
         if (statements.Count > 0)
         {
             int j = Random.Range(0, statements.Count);
