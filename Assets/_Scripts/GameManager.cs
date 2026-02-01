@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite maskleave;
 
     [SerializeField] private GameObject doorClosed;
+    [SerializeField] private Button doorButton;
+    [SerializeField] private Button doorSlamButton;
 
     private int guestAnnoyances;
     [SerializeField] private int maxGuestAnnoyances;
@@ -49,7 +52,11 @@ public class GameManager : MonoBehaviour
         statements = new List<string>();
         GenerateRoundProfiles(totalGuestsAndIntruders);
 
+        CloseDoor();
         SendNextGuest();
+
+        doorButton.onClick.AddListener(delegate { OpenDoor(); });
+        doorSlamButton.onClick.AddListener(delegate { SlamDoor(); });
     }
 
     public void SelectGuest(int id)
@@ -99,8 +106,10 @@ public class GameManager : MonoBehaviour
     void SendNextGuest()
     {
         guestAnnoyances = 0;
+        doorButton.interactable = true;
         int j = Random.Range(0, roundProfiles.Count);
         GuestProfile guest = roundProfiles[j];
+        roundProfiles.RemoveAt(j);
         currentGuest = guest.id;
 
         AddGuestStatements(guest);
@@ -116,7 +125,20 @@ public class GameManager : MonoBehaviour
     void OpenDoor()
     {
         doorClosed.SetActive(false);
+        doorButton.interactable = false;
         GetNextStatement();
+    }
+
+    void CloseDoor() => doorClosed.SetActive(true);
+
+    void SlamDoor()
+    {
+        guestStatements.text = populateGuestList.CompleteProfileList[currentGuest].leaveStatement;
+        CloseDoor();
+        if (populateGuestList.profileList.Contains(populateGuestList.CompleteProfileList[currentGuest]))
+        {
+            strikes++;
+        }
     }
 
     void SucessGuest()
@@ -124,6 +146,7 @@ public class GameManager : MonoBehaviour
         maskRenderer.color = new Color(1, 1, 1, 0);
         guestRenderer.color = new Color(1, 1, 1, 1);
 
+        Invoke("CloseDoor", 2f);
         Invoke("SendNextGuest", 5f);
     }
 
