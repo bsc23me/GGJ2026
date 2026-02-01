@@ -84,4 +84,6 @@ public class GameManager : MonoBehaviour
         int j = Random.Range(0, roundProfiles.Count);
 
     }
+
+
 }
