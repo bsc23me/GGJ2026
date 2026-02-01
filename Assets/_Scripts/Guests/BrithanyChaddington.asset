@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BrithanyChaddington
   m_EditorClassIdentifier: Assembly-CSharp::GuestProfile
   id: 2
-  guestImage: {fileID: 0}
+  guestImage: {fileID: -7666683654005322200, guid: 693141a249d9e5d428e3df28bebfdd14, type: 3}
   PFP: {fileID: 0}
   guestName: Brithany Chaddington
   descriptors:
@@ -25,4 +25,6 @@ MonoBehaviour:
   - They never leave hot people outside like this in Japan.
   - If I knew you were going to be such a jerk about this, I would have brought a
     scarf.
+  arriveStatement: 
+  leaveStatement: This is so fucked, I thought we were close!
   bouncerThoughts: 

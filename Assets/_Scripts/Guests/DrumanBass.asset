@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DrumanBass
   m_EditorClassIdentifier: Assembly-CSharp::GuestProfile
   id: 3
-  guestImage: {fileID: 0}
+  guestImage: {fileID: 5652451593380784351, guid: fea6291a6b3c80f4caa458eb6f7b361e, type: 3}
   PFP: {fileID: 0}
   guestName: Druman Bass
   descriptors:
@@ -24,4 +24,6 @@ MonoBehaviour:
   - Every good party has live music, man.
   - You won't believe how good I am at Wonderwall.
   - What's with the third degree? You've heard how good I play.
+  arriveStatement: 
+  leaveStatement: Wow, this party is going to be flat without me,
   bouncerThoughts: 

@@ -559,6 +559,10 @@ MonoBehaviour:
   totalGuestsAndIntruders: 3
   guestRenderer: {fileID: 1291010474}
   maskRenderer: {fileID: 587601138}
+  masks:
+  - {fileID: -4723400340868563019, guid: 1f3e98daa318f744e9ed79c41b4cb313, type: 3}
+  maskleave: {fileID: 7554969188602217544, guid: f326f3b34b7899047b6fe10abe73a720, type: 3}
+  doorClosed: {fileID: 1461317617}
   maxGuestAnnoyances: 3
   maxStrikes: 3
   guestStatements: {fileID: 1127119086}
@@ -664,7 +668,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -4723400340868563019, guid: 1f3e98daa318f744e9ed79c41b4cb313, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -672,7 +676,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &587601139
 Transform:
@@ -1784,7 +1788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000480517}
+  m_AnchoredPosition: {x: 0, y: -0.00008614728}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1412116094

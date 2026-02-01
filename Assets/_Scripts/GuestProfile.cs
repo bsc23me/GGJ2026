@@ -10,6 +10,8 @@ public class GuestProfile : ScriptableObject
     public string guestName;
     public string[] descriptors;
     public string[] statements;
+    public string arriveStatement;
+    public string leaveStatement;
     public string bouncerThoughts;
 
 }

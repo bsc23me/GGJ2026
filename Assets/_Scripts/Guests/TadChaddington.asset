@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TadChaddington
   m_EditorClassIdentifier: Assembly-CSharp::GuestProfile
   id: 1
-  guestImage: {fileID: 0}
+  guestImage: {fileID: -8137987809740744281, guid: 5588f73ecc15aac4a80c8c37073e1732, type: 3}
   PFP: {fileID: 0}
   guestName: Tad Chaddington
   descriptors:
@@ -25,4 +25,7 @@ MonoBehaviour:
   - Come on, you know me. I've shoved you into so many lockers!
   - People say I'm dumb, but once I'm done in the Pro Sportsball League, I'm becoming
     a law guy just like my dad!
+  arriveStatement: 
+  leaveStatement: What the hell man! My dad is so going to hear about this mad injustice
+    bro!
   bouncerThoughts: 

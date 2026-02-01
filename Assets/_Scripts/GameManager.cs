@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private SpriteRenderer guestRenderer;
     [SerializeField] private SpriteRenderer maskRenderer;
+
+    [SerializeField] private Sprite[] masks;
+    [SerializeField] private Sprite maskleave;
+
+    [SerializeField] private GameObject doorClosed;
 
     private int guestAnnoyances;
     [SerializeField] private int maxGuestAnnoyances;
@@ -54,7 +60,10 @@ public class GameManager : MonoBehaviour
             // TODO: punish for intruder
             guestsEntered++;
             if (guestsEntered < populateGuestList.numberOfGuests)
-                SendNextGuest();
+            {
+                // add door and bell stuff
+                SucessGuest();
+            }
             else // WIN
                 SceneManager.LoadScene(2);
         }
@@ -64,8 +73,8 @@ public class GameManager : MonoBehaviour
             if (guestAnnoyances >= maxGuestAnnoyances)
             {
                 strikes++;
-                if(strikes < maxStrikes)
-                    SendNextGuest();
+                if (strikes < maxStrikes)
+                    FailGuest();
                 else // LOSE
                     SceneManager.LoadScene(3);
             }
@@ -79,23 +88,51 @@ public class GameManager : MonoBehaviour
     void GenerateRoundProfiles(int numberOfGuests)
     {
         roundProfiles.AddRange(populateGuestList.profiles);
-        //Debug.Log("RoundProfiles: "+roundProfiles.Count);
         int toRemove = roundProfiles.Count - numberOfGuests;
         for (int i = 0; i < toRemove; i++)
         {
             int j = Random.Range(0, roundProfiles.Count);
             roundProfiles.RemoveAt(j);
         }
-        //Debug.Log("RoundProfiles: "+roundProfiles.Count);
     }
 
     void SendNextGuest()
     {
         guestAnnoyances = 0;
         int j = Random.Range(0, roundProfiles.Count);
-        currentGuest = roundProfiles[j].id;
-        AddGuestStatements(roundProfiles[j]);
+        GuestProfile guest = roundProfiles[j];
+        currentGuest = guest.id;
+
+        AddGuestStatements(guest);
+        guestStatements.text = string.Empty;
+
+        maskRenderer.sprite = masks[Random.Range(0, masks.Length)];
+        maskRenderer.color = new Color(1, 1, 1, 1);
+
+        guestRenderer.sprite = guest.guestImage;
+        guestRenderer.color = new Color(1, 1, 1, 0);
+    }
+
+    void OpenDoor()
+    {
+        doorClosed.SetActive(false);
         GetNextStatement();
+    }
+
+    void SucessGuest()
+    {
+        maskRenderer.color = new Color(1, 1, 1, 0);
+        guestRenderer.color = new Color(1, 1, 1, 1);
+
+        Invoke("SendNextGuest", 5f);
+    }
+
+    void FailGuest()
+    {
+        maskRenderer.sprite = maskleave;
+        guestStatements.text = populateGuestList.CompleteProfileList[currentGuest].leaveStatement;
+
+        Invoke("SendNextGuest", 5f);
     }
 
     void AddGuestStatements(GuestProfile profile)
